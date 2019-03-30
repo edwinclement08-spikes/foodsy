@@ -83,32 +83,8 @@ export default class Home extends Component {
           </CustomCard>
           <CustomCard>
             <Text>Tutorials</Text>
-            <View style={{ width: "100%" }}>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
-              <Text>seffse</Text>
+            <View>
+              <Text>Youtube</Text>
             </View>
           </CustomCard>
         </ScrollView>
