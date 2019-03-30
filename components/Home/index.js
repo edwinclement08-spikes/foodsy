@@ -123,11 +123,7 @@ export default class Home extends Component {
           >
             <Icon name="md-create" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item
-            buttonColor="#3498db"
-            title="Food Consumption"
-            onPress={() => {}}
-          >
+          <ActionButton.Item buttonColor='#3498db' title="Food Consumption" onPress={() => this.props.navigation.navigate('Predictor')}>
             <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           <ActionButton.Item

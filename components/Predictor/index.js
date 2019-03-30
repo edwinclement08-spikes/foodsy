@@ -1,125 +1,271 @@
-import React, {Component} from "react";
-import {StyleSheet, ImageBackground, Image, View, Dimensions , Linking} from 'react-native';
-import {Container, Content, Button, Item, Label, Input, Form,Text, Icon} from "native-base";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
 
-import IPADDR from '../../assets/constant/IP';
-import axios from 'axios';
+import React, {Component} from 'react';
+import {Platform, StyleSheet, View, CameraRoll, PermissionsAndroid, WebView} from 'react-native';
+import axios from 'axios'
+import ImagePicker from 'react-native-image-picker';
+import DLIP from '../../assets/constant/DLIP';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import SERVERIP from '../../assets/constant/SERVER';
+import { Button , Text } from 'native-base'
 
-const {width: WIDTH} = Dimensions.get('window');
+export default class App extends Component{
 
-export default class SignIn extends Component {
-    constructor(props)  {
-        super(props);
-        this.state = {
-            errorMessage: false
+  constructor(props){
+
+    super(props);
+    this.state = {
+      fd : null,
+      result : false,
+      predicted : false,
+      fill : 86,
+      imageData : '',
+      imageLink : ''
+    }
+    this.getPhotos = this.getPhotos.bind(this);
+
+  }
+
+  async componentDidMount(){
+
+    console.log("mounting hello")
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'Cool Photo App Camera Permission',
+        message:
+          'Cool Photo App needs access to your camera ' +
+          'so you can take awesome pictures.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+
+    console.log(granted)
+
+  }
+
+
+
+
+
+  _uploadToImgur = ()=>{
+
+    console.log("Uploading...")
+    var url = `${SERVERIP}/upload`;
+    var fd = this.state.fd
+    const ts = this;
+    axios({
+      method: 'post',
+      url: url,
+      data: fd,
+      config: { headers: {'content-type': 'multipart/form-data' }}
+      })
+      .then(function (response) {
+          //handle success
+          var data = response.data.link;
+          ts.setState({imageLink : data});
+          console.log("[INFO: ]",response.data);
+      })
+      .catch(function (response) {
+          //handle error
+          console.log("[RESPONSE: ]",response);
+    });    
+
+  }
+
+  getPhotos = async () => {
+
+    var fd = new FormData()
+
+// Open Image Library:
+    ImagePicker.showImagePicker({}, (response) => {
+      
+      console.log(response.uri)
+
+      this.setState({
+        imageData : {  
+          uri: response.uri,
+          type: "image/jpeg",
+          name: response.fileName
         }
-    } 
+      })
 
-    verifyUser = () =>{
+      fd.append('file', {
+        uri: response.uri,
+        type: "image/jpeg",
+        name: response.fileName
+      });
 
-        var url = `${IPADDR}user/verify`
-        var username = this.state.formUsername,
-            password = this.state.formPassword;
+      this.setState({ fd })
+      
+    //   console.log(fd , "image data")
 
-        axios.post( url , {username,password} ).then( res =>{
+    //   this._uploadToImgur();
+    console.log("LOADED")
 
-            var data = res.data;
-            console.log(data, "======")
-            if ( data.status ){
-                if ( data.user.isStudent ){
-                    this.props.navigation.navigate('profile', { user : data.user } )
-                }else{
-                    this.props.navigation.navigate('driverdummy', { user : data.user })
-                }
-            }else{
-                this.setState( { errorMessage : true } )
-            }
-
-        })
+    })  ;
 
 
-    }
 
-    render() {
-        return (
-            <Container>
-                <Content>
 
-                    <View style={styles.logoContainer}>
-                        <Text style={styles.logoText}>Login In</Text>
-                    </View>
 
-                    <View style={{paddingLeft: 20, paddingRight: 20}}>
-                        {this.state.errorMessage &&
-                        <View style={{backgroundColor:"lightpink", padding:20,
-                         borderRadius:10, borderWidth:2, borderColour:"red", textAlign:"center", marginTop:20}}>
-                            <Text>{this.state.errorMessage}</Text>
-                        </View> }
-                        
-                        <Form block style={styles.item}>
-                            <Item block floatingLabel>
-                                <Label block style={{marginBottom: 20}}>
-                                    <Text>Mobile Number</Text>
-                                </Label>
-                                <FontAwesome5 name={'user'} brand style={{paddingLeft:25 ,color:'#000000'}} />
+  }
 
-                                <Input block
-                                       onChangeText={(text) => this.setState({"formUsername":text})}
-                                       value={this.state["formUsername"]} />
-                            </Item>
-                            <Item floatingLabel>
-                                <Label>Password</Label>
-                                <FontAwesome5 name={"bars"} style={{fontSize:20}} />
-                                <Input secureTextEntry
-                                       onChangeText={(text) => this.setState({"formPassword":text})}
-                                       value={this.state["formPassword"]}/>
-                            </Item>
-                        </Form>
-                        <View style={{ marginTop:6 , marginLeft: 15,}}>
-                        <Text style={{fontSize:14 }}>Forgot Password...?</Text>
-                    </View>
 
-                        <Button rounded info style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
-                               onPress={ this.verifyUser }>
-                            <Text>Driver Login</Text>
-                        </Button>
 
-                    </View>
+  _classifyImage = async () =>{
 
-                </Content>
-            </Container>
-        );
-    }
+    var url = `${DLIP}/classify_food`
+    const ts = this;
+
+    axios.get(url).then( data =>{
+
+        console.log(data.data)
+
+    } ).catch( err => console.log(err) )
+    
+
+  }
+
+  _foodOrNot = () =>{
+
+    console.log("Let's See..")
+    var url = `${DLIP}/check_if_food`;
+
+    var fd = this.state.fd
+    const ts = this;
+    axios({
+      method: 'post',
+      url: url,
+      data: fd,
+      config: { headers: {'content-type': 'multipart/form-data' }}
+      })
+      .then(function (response) {
+          //handle success
+          var data = response.data;
+          ts.setState({result : data.result, predicted : true})
+          console.log("[INFO: ]",response);
+      })
+      .catch(function (response) {
+          //handle error
+          console.log("[RESPONSE: ]",response);
+    }); 
+
+  }
+
+  _predict = async () =>{
+
+    console.log("Predicting..")
+    var url = `${DLIP}/classify_food`;
+    var fd = this.state.fd
+    const ts = this;
+    axios({
+      method: 'post',
+      url: url,
+      data: fd,
+      config: { headers: {'content-type': 'multipart/form-data' }}
+      })
+      .then(function (response) {
+          //handle success
+          var data = response.data;
+          ts.setState({result : data.result, predicted : true})
+          console.log("[INFO: ]",response);
+      })
+      .catch(function (response) {
+          //handle error
+          console.log("[RESPONSE: ]",response);
+    });
+    
+
+  }
+
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Text style={styles.instructions}>To get started, edit App.js</Text>
+
+        <AnimatedCircularProgress
+        size={200}
+        width={3}
+        fill={this.state.fill}
+        tintColor="#00e0ff"
+        backgroundColor="#3d5875">
+        {
+          (fill) => (
+            <Text style={styles.points}>
+              { this.state.fill }
+            </Text>
+          )
+        }
+        </AnimatedCircularProgress>
+
+        <Button style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
+         onPress={this.getPhotos} >
+            <Text>
+            Upload Pic
+            </Text>
+        </Button>
+
+        <Button  style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
+         onPress={() => this.props.navigation.navigate('Barcode') } >
+            <Text>
+            Scan Barcode
+            </Text>
+        </Button>
+
+        <Button  style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
+         onPress={this._predict } >
+            <Text>
+            Predict
+            </Text>
+        </Button>
+
+
+        {
+          this.state.predicted && 
+          <Text style={{ fontSize: 24 }} > { this.state.result } </Text>
+
+        }
+
+
+        {/* <Button style={{ marginTop : 100 }} onPress={() => this.props.navigation.navigate('Youtube') } 
+        title="Youtube" />   */}
+
+
+
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    backgroundContainer: {
-        flex: 1,
-        width: null,
-        height: null,
-        justifyContent: 'center',
-        alignItems: 'center',
-
-    },
-    logoContainer: {
-        alignItems: 'center',
-        marginTop: 50
-    },
-    logo: {
-        height: 150,
-        width: 150,
-        resizeMode: 'contain'
-    },
-    logoText: {
-        color: 'black',
-        fontSize: 30,
-        fontWeight: '300',
-        opacity: 0.9,
-    },
-    item: {
-        paddingTop: 10,
-    },
-
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+  spaceMe : {
+      marginTop : 100
+  }
 });
-
