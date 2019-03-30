@@ -83,7 +83,7 @@ export default class Home extends Component {
           </CustomCard>
           <CustomCard>
             <Text>Tutorials</Text>
-            <View style={{ width: "100%", backgroundColor: "red" }}>
+            <View style={{ width: "100%" }}>
               <Text>seffse</Text>
               <Text>seffse</Text>
               <Text>seffse</Text>
@@ -123,7 +123,11 @@ export default class Home extends Component {
           >
             <Icon name="md-create" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#3498db' title="Food Consumption" onPress={() => this.props.navigation.navigate('Predictor')}>
+          <ActionButton.Item
+            buttonColor="#3498db"
+            title="Food Consumption"
+            onPress={() => this.props.navigation.navigate("Predictor")}
+          >
             <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           <ActionButton.Item

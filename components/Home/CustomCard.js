@@ -17,7 +17,6 @@ export class CustomCard extends Component {
 var styles = {
   card: {
     backgroundColor: "white",
-
     margin: 4,
     borderColor: "darkgrey",
     borderWidth: 1,
@@ -32,7 +31,7 @@ var styles = {
     borderBottomWidth: 1
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 22,
     color: "black"
   },
   body: {
