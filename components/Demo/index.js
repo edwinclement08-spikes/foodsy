@@ -13,6 +13,8 @@ import ImagePicker from 'react-native-image-picker';
 import DLIP from '../../assets/constant/DLIP';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
+
+
 export default class App extends Component{
 
   constructor(props){
@@ -22,7 +24,8 @@ export default class App extends Component{
       fd : null,
       result : false,
       predicted : false,
-      fill : 86
+      fill : 86,
+      imageData : ''
     }
     this.getPhotos = this.getPhotos.bind(this);
 
@@ -58,6 +61,14 @@ export default class App extends Component{
       
       
 
+      this.setState({
+        imageData : {  
+          uri: response.uri,
+          type: "image/jpeg",
+          name: response.fileName
+        }
+      })
+
       fd.append('file', {
         uri: response.uri,
         type: "image/jpeg",
@@ -73,6 +84,10 @@ export default class App extends Component{
 
 
 
+  }
+
+
+  _uploadToImgur = ()=>{
   }
 
   upload = () =>{
@@ -122,21 +137,24 @@ export default class App extends Component{
         }
         </AnimatedCircularProgress>
 
-        <Button onPress={this.getPhotos} title="Upload Pic" />
+        <Button  style={styles.spaceMe} onPress={this.getPhotos} title="Upload Pic" />
 
         <Button onPress={() => this.props.navigation.navigate('Barcode') } 
         title=" Scan Barcode" />
 
 
-        <Button onPress={this.upload} title="Send Pic" />
+        <Button style={styles.spaceMe} onPress={this.upload} title="Send Pic" />
         {
           this.state.predicted && 
           <Text> { this.state.result } </Text>
 
         }
 
-        <Button onPress={() => this.props.navigation.navigate('Youtube') } 
+        <Button style={styles.spaceMe} onPress={() => this.props.navigation.navigate('Youtube') } 
         title="Youtube" />  
+
+        <Button style={styles.spaceMe} onPress={() => this.props.navigation.navigate('Youtube') } 
+        title="Upload to Imgur" />  
 
 
       </View>
@@ -161,4 +179,8 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  spaceMe : {
+    margin : 5,
+    padding : 5
+  }
 });
