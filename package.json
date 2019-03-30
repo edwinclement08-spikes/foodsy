@@ -15,7 +15,8 @@
     "react-native-circular-progress": "^1.1.0",
     "react-native-dialogflow-text": "0.0.1",
     "react-native-gifted-chat": "^0.7.2",
-    "react-native-svg": "^9.3.6"
+    "react-native-svg": "^9.3.6",
+    "recyclerlistview": "^1.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
