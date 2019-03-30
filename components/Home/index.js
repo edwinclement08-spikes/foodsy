@@ -12,7 +12,7 @@ export default class Home extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
-        <View>
+        <ScrollView>
           <CustomCard>
             <Text>Progress</Text>
             <View>
@@ -111,7 +111,7 @@ export default class Home extends Component {
               <Text>seffse</Text>
             </View>
           </CustomCard>
-        </View>
+        </ScrollView>
         <ActionButton
           buttonColor="rgba(231,76,60,1)"
           style={{ zIndex: 100000 }}
