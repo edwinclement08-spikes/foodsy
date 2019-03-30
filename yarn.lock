@@ -4184,6 +4184,11 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+jsrsasign@^8.0.12:
+  version "8.0.12"
+  resolved "https://registry.yarnpkg.com/jsrsasign/-/jsrsasign-8.0.12.tgz#22abb9656d34a30b9530436720835e89c2e5c316"
+  integrity sha1-Iqu5ZW00owuVMENnIINeicLlwxY=
+
 jsx-ast-utils@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.0.1.tgz#e801b1b39985e20fffc87b40e3748080e2dcac7f"
@@ -5732,6 +5737,13 @@ react-native-communications@2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-native-communications/-/react-native-communications-2.2.1.tgz#7883b56b20a002eeb790c113f8616ea8692ca795"
   integrity sha1-eIO1ayCgAu63kMET+GFuqGksp5U=
+
+react-native-dialogflow-text@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-dialogflow-text/-/react-native-dialogflow-text-0.0.1.tgz#bb2b88003e4268dc0f2d39e5ad43996de1c0a0a5"
+  integrity sha512-PcUHO0yt0+tTj9PjMRtMnUnrrSrt674NL/nNO0Z63zr6VmAY2OoVmuObdJWdXj5no8LEH3qgDnBInvfxTuzD2A==
+  dependencies:
+    jsrsasign "^8.0.12"
 
 react-native-drawer@2.5.1:
   version "2.5.1"
