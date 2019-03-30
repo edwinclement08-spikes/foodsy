@@ -19,7 +19,8 @@ import Predictor from './components/Predictor'
 
 import SideBar from './components/SideBar';
 
-
+///Demos
+import BarcodeDemo from './components/Demo/Barcode';
 
 //-----------------------Drawer navigation Bar ---------------------------------------
 
@@ -37,7 +38,8 @@ const Mdn = createDrawerNavigator({
 
 const AppNavigator = createStackNavigator({
   Login: { screen: Login },
-  Predictor : { screen : Predictor }, 
+  Predictor : { screen : Predictor },
+  BarcodeDemo : { screen : BarcodeDemo } ,
    Home: Mdn
   },
   {

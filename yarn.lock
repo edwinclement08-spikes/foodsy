@@ -5682,6 +5682,20 @@ react-native-awesome-alerts@^1.2.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-camera@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-2.1.1.tgz#437cc62613b386d648baabc4b77147ab33d84558"
+  integrity sha512-lcsV4Pt7Ex402Zof3EYaBhLxytU3wefyxpoSCvQyZ1LligdAmsYwyCZeODj1Otcjuxw3gH/skgr0rl/kRPOq8g==
+  dependencies:
+    prop-types "^15.6.2"
+
+react-native-circular-progress@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-circular-progress/-/react-native-circular-progress-1.1.0.tgz#5cb3efe570796226c59bf15a35250fb8b0d45025"
+  integrity sha512-4Fx7hDGUJyLHTc9fThnXmsW+ea3wjNC8xUwoTCnaL6W29ki9IJQZY9QiDzwtReDxHW6CvNiEzeYB3obNgOfUrQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
@@ -5783,6 +5797,11 @@ react-native-status-bar-height@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.3.1.tgz#b92ce9112c2367290847ac11284d9d84a6330169"
   integrity sha512-m9nGKYfFn6ljF1abafzF5cFaD9JCzXwj7kNE9CuF+g0TgtItH70eY2uHaCV9moENTftqd5XIS3Cx0mf4WfistA==
+
+react-native-svg@^9.3.6:
+  version "9.3.6"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.3.6.tgz#99361aa98aabad0d538f63e7096456cf54f48e2c"
+  integrity sha512-HEx8tSwzIN2kmY4prpUMQK2DY3aGkPXgKIiHfuvmGvuL+7d4wn4j7v1z/3TyLfwwSxlwGKG036TUQOot1BKGMA==
 
 react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   version "1.3.4"
