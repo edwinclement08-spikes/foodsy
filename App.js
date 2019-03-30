@@ -36,7 +36,10 @@ import Barcode from "./components/Barcode";
 
 const Mdn = createDrawerNavigator(
   {
-    Home: { screen: Home }
+    Home: { screen: Home },
+    Predictor: { screen: Predictor},
+    Chatbot: { screen: Chatbot},
+    Workout: { screen: Workout}
   },
   {
     contentComponent: SideBar
