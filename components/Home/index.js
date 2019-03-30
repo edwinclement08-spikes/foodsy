@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 import ActionButton from "react-native-action-button";
 import Icon from "react-native-vector-icons/Ionicons";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import FSIcon from "react-native-vector-icons/FontAwesome";
 import Youtube from "../Demo/youtube";
 import { CustomCard } from "./CustomCard";
 
@@ -98,7 +97,7 @@ export default class Home extends Component {
           <ActionButton.Item
             buttonColor="#9b59b6"
             title="Workouts"
-            onPress={() => console.log("notes tapped!")}
+            onPress={() => this.props.navigation.navigate("Workout")}
           >
             <Icon name="md-create" style={styles.actionButtonIcon} />
           </ActionButton.Item>
