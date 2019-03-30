@@ -31,6 +31,7 @@ import Workout from "./components/Workout";
 import SideBar from "./components/SideBar";
 
 import Barcode from "./components/Barcode";
+import ExercisePage from "./components/Exercise";
 
 //-----------------------Drawer navigation Bar ---------------------------------------
 
@@ -54,7 +55,8 @@ const AppNavigator = createStackNavigator(
     Chatbot: { screen: Chatbot },
     Youtube: { screen: Youtube },
     Workout: { screen: Workout },
-    Home: Mdn
+    Home: Mdn,
+    Exercise: { screen: ExercisePage }
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
