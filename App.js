@@ -25,6 +25,7 @@ import Predictor from "./components/Predictor";
 import Demo from "./components/Demo";
 
 import Youtube from "./components/Demo/youtube";
+import Chatbot from "./components/ChatBot";
 
 import SideBar from "./components/SideBar";
 
@@ -49,7 +50,7 @@ const AppNavigator = createStackNavigator(
     Predictor: { screen: Predictor },
     Barcode: { screen: Barcode },
     Demo: { screen: Demo },
-
+    Chatbot: { screen: Chatbot },
     Youtube: { screen: Youtube },
     Home: Mdn
   },

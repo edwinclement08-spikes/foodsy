@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import ActionButton from "react-native-action-button";
 import Icon from "react-native-vector-icons/Ionicons";
-import Card from "react-native-elements";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import FSIcon from "react-native-vector-icons/FontAwesome";
 import Youtube from "../Demo/youtube";
 import { CustomCard } from "./CustomCard";
 
 export default class Home extends Component {
+  goToChatbot = () => {
+    this.props.navigation.navigate("Chatbot");
+  };
+
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
@@ -101,17 +104,17 @@ export default class Home extends Component {
           </ActionButton.Item>
           <ActionButton.Item
             buttonColor="#3498db"
-            title="Food Consumption"
+            title="Add Food"
             onPress={() => this.props.navigation.navigate("Predictor")}
           >
             <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           <ActionButton.Item
             buttonColor="#1abc9c"
-            title="Recommended Diet"
-            onPress={() => {}}
+            title="Chat With Us"
+            onPress={this.goToChatbot}
           >
-            <Icon name="md-done-all" style={styles.actionButtonIcon} />
+            <Icon name="md-people" style={styles.actionButtonIcon} />
           </ActionButton.Item>
         </ActionButton>
       </View>
