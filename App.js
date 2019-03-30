@@ -16,6 +16,7 @@ import { createStackNavigator, createAppContainer,  createDrawerNavigator, creat
 import Home from './components/Demo';
 import Login from './components/Login'
 import Predictor from './components/Predictor'
+import Demo from './components/Demo'
 
 import SideBar from './components/SideBar';
 
@@ -39,6 +40,7 @@ const AppNavigator = createStackNavigator({
   Login: { screen: Login },
   Predictor : { screen : Predictor }, 
   Barcode : { screen : Barcode } ,
+  Demo : { screen : Demo },
    Home: Mdn
   },
   {
