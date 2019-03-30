@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, ImageBackground, Image } from "react-native";
+import { View, Text, ImageBackground, Image, TouchableOpacity, Button } from "react-native";
+import { withNavigation } from "react-navigation"
 
-export default class FullWidthCard extends React.Component {
+class FullWidthCard extends React.Component {
   constructor(props) {
     super(props);
     console.log(this.props);
@@ -52,9 +53,11 @@ export default class FullWidthCard extends React.Component {
                     width: 105
                   }}
                 >
-                  <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                    Start Now
-                  </Text>
+                  <TouchableOpacity onPress={this.props.navigation.navigate('WorkoutDetail')}>
+                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                      Start Now
+                    </Text>
+                    </TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -84,3 +87,5 @@ styles = {
     margin: 15
   }
 };
+
+export default withNavigation(FullWidthCard);

@@ -27,6 +27,7 @@ import Demo from "./components/Demo";
 import Youtube from "./components/Demo/youtube";
 import Chatbot from "./components/ChatBot";
 import Workout from "./components/Workout";
+import WorkoutDetail from "./components/WorkoutDetail"
 
 import SideBar from "./components/SideBar";
 
@@ -37,7 +38,10 @@ import ExercisePage from "./components/Exercise";
 
 const Mdn = createDrawerNavigator(
   {
-    Home: { screen: Home }
+    Home: { screen: Home },
+    Predictor: { screen: Predictor},
+    Chatbot: { screen: Chatbot},
+    Workout: { screen: Workout}
   },
   {
     contentComponent: SideBar
@@ -56,6 +60,7 @@ const AppNavigator = createStackNavigator(
     Youtube: { screen: Youtube },
     Workout: { screen: Workout },
     Home: Mdn,
+    WorkoutDetail: { screen: WorkoutDetail },
     Exercise: { screen: ExercisePage }
   },
   {

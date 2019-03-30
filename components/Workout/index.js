@@ -31,11 +31,15 @@ var data = [
 ];
 
 export default class Workout extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     let g = [];
     for (let i = 0; i < data.length; i++) {
       g.push(
         <FullWidthCard
+          key={data[i].name}
           workoutType={data[i].name}
           navPoint={data[i]}
           bgImg={data[i].bg}
