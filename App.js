@@ -18,6 +18,15 @@ import Login from './components/Login'
 import Predictor from './components/Predictor'
 import Demo from './components/Demo'
 
+
+
+
+
+
+
+
+import Youtube from './components/Demo/youtube';
+
 import SideBar from './components/SideBar';
 
 import Barcode from './components/Barcode';
@@ -41,6 +50,15 @@ const AppNavigator = createStackNavigator({
   Predictor : { screen : Predictor }, 
   Barcode : { screen : Barcode } ,
   Demo : { screen : Demo },
+
+
+
+
+
+
+
+
+  Youtube : { screen : Youtube },
    Home: Mdn
   },
   {

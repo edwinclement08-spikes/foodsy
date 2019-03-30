@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Button, CameraRoll, PermissionsAndroid} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button, CameraRoll, PermissionsAndroid, WebView} from 'react-native';
 import axios from 'axios'
 import ImagePicker from 'react-native-image-picker';
 import DLIP from '../../assets/constant/DLIP';
@@ -134,6 +134,11 @@ export default class App extends Component{
           <Text> { this.state.result } </Text>
 
         }
+
+        <Button onPress={() => this.props.navigation.navigate('Youtube') } 
+        title="Youtube" />  
+
+
       </View>
     );
   }

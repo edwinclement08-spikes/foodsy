@@ -14,7 +14,11 @@ export default class SignIn extends Component {
         this.state = {
             errorMessage: false
         }
-    } 
+    }
+    
+    _jumpToDemo = () =>{
+        this.props.navigation.navigate('Demo');
+    }
 
     verifyUser = () =>{
 
@@ -84,6 +88,11 @@ export default class SignIn extends Component {
                         <Button rounded info style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
                                onPress={ this.verifyUser }>
                             <Text>Login</Text>
+                        </Button>
+
+                        <Button rounded info style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
+                               onPress={ this._jumpToDemo }>
+                            <Text>DEBUG</Text>
                         </Button>
 
                     </View>
