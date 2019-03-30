@@ -27,6 +27,7 @@ import Demo from "./components/Demo";
 import Youtube from "./components/Demo/youtube";
 import Chatbot from "./components/ChatBot";
 import Workout from "./components/Workout";
+import WorkoutDetail from "./components/WorkoutDetail"
 
 import SideBar from "./components/SideBar";
 
@@ -57,6 +58,7 @@ const AppNavigator = createStackNavigator(
     Chatbot: { screen: Chatbot },
     Youtube: { screen: Youtube },
     Workout: { screen: Workout },
+    WorkoutDetail: { screen: WorkoutDetail },
     Home: Mdn
   },
   {
