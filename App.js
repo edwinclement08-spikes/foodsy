@@ -13,7 +13,7 @@ import {Button, Item, Input, Icon } from 'native-base';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createStackNavigator, createAppContainer,  createDrawerNavigator, createSwitchNavigator ,createBottomTabNavigator } from "react-navigation";
 
-import Home from './components/Demo';
+import Home from './components/Home';
 import Login from './components/Login'
 import Predictor from './components/Predictor'
 import Demo from './components/Demo'
