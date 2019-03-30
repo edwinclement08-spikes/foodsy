@@ -13,14 +13,13 @@ import {Button, Item, Input, Icon } from 'native-base';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createStackNavigator, createAppContainer,  createDrawerNavigator, createSwitchNavigator ,createBottomTabNavigator } from "react-navigation";
 
-import Home from './components/Home';
+import Home from './components/Demo';
 import Login from './components/Login'
 import Predictor from './components/Predictor'
 
 import SideBar from './components/SideBar';
 
-///Demos
-import BarcodeDemo from './components/Demo/Barcode';
+import Barcode from './components/Barcode';
 
 //-----------------------Drawer navigation Bar ---------------------------------------
 
@@ -38,8 +37,8 @@ const Mdn = createDrawerNavigator({
 
 const AppNavigator = createStackNavigator({
   Login: { screen: Login },
-  Predictor : { screen : Predictor },
-  BarcodeDemo : { screen : BarcodeDemo } ,
+  Predictor : { screen : Predictor }, 
+  Barcode : { screen : Barcode } ,
    Home: Mdn
   },
   {
