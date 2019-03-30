@@ -12,7 +12,12 @@ import axios from 'axios'
 import ImagePicker from 'react-native-image-picker';
 import DLIP from '../../assets/constant/DLIP';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+
+
 import SERVERIP from '../../assets/constant/SERVER';
+import SUBCATIP from '../../assets/constant/SUBCATIP'
+
+
 import { Button , Text } from 'native-base'
 
 export default class App extends Component{
@@ -26,7 +31,7 @@ export default class App extends Component{
       predicted : false,
       fill : 86,
       imageData : '',
-      imageLink : ''
+      imageLink : 'https://i.imgur.com/XBhCPJk.jpg'
     }
     this.getPhotos = this.getPhotos.bind(this);
 
@@ -70,9 +75,10 @@ export default class App extends Component{
       })
       .then(function (response) {
           //handle success
-          var data = response.data.link;
+          var data = response.data.data.link;
           ts.setState({imageLink : data});
-          console.log("[INFO: ]",response.data);
+          console.log("data is", data)
+          console.log("[INFO: ]",response.data.data);
       })
       .catch(function (response) {
           //handle error
@@ -106,9 +112,9 @@ export default class App extends Component{
 
       this.setState({ fd })
       
-    //   console.log(fd , "image data")
+      console.log(fd , "image data")
 
-    //   this._uploadToImgur();
+      this._uploadToImgur();
     console.log("LOADED")
 
     })  ;
@@ -188,6 +194,32 @@ export default class App extends Component{
   }
 
 
+  __specialPredict = () => {
+
+    console.log("Let's See..")
+    var url = `${SUBCATIP}`;
+
+    var fd = this.state.fd
+    const ts = this;
+    console.log(this.state.imageLink , "=====img link")
+    axios.post(
+       url,   {image_url : ts.state.imageLink } ,
+       { headers: {'content-type': 'application/json' }})
+      .then(function (response) {
+          //handle success
+          var data = response.data;
+          ts.setState({result : data.best_guess, predicted : true})
+          console.log("[INFO: ]",response);
+      })
+      .catch(function (response) {
+          //handle error
+          console.log("[RESPONSE: ]",response);
+    }); 
+
+
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -227,6 +259,13 @@ export default class App extends Component{
          onPress={this._predict } >
             <Text>
             Predict
+            </Text>
+        </Button>
+
+        <Button  style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
+         onPress={this.__specialPredict } >
+            <Text>
+            Special Predict
             </Text>
         </Button>
 
