@@ -92,6 +92,7 @@ export default class App extends Component{
 
   upload = () =>{
 
+    console.log("Predicting...")
     var url = `${DLIP}/analyze`;
     var fd = this.state.fd
     const ts = this;

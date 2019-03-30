@@ -14,7 +14,7 @@ export default class Home extends Component {
           <ActionButton.Item buttonColor='#9b59b6' title="Workouts" onPress={() => console.log("notes tapped!")}>
             <Icon name="md-create" style={styles.actionButtonIcon} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#3498db' title="Food Consumption" onPress={() => {}}>
+          <ActionButton.Item buttonColor='#3498db' title="Food Consumption" onPress={() => this.props.navigation.navigate('Predictor')}>
             <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#1abc9c' title="Recommended Diet" onPress={() => {}}>
