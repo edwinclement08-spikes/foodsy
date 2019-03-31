@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, WebView } from "react-native";
 import ActionButton from "react-native-action-button";
 import Icon from "react-native-vector-icons/Ionicons";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import Youtube from "../Demo/youtube";
-import { CustomCard } from "./CustomCard";
+import { CustomCard, CustomCardFullWidth } from "./CustomCard";
+import DietRecommendation from "./DietRecommendation";
 
 export default class Home extends Component {
   goToChatbot = () => {
@@ -13,16 +14,20 @@ export default class Home extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: "#f3f3f3" }}>
+      <View style={{ flex: 1, backgroundColor: "#ccc" }}>
         <ScrollView>
           <CustomCard>
-            <Text>Progress</Text>
+            <Text style={styles.heading}>Progress</Text>
             <View>
               <View>
                 <View
                   style={{
                     flexDirection: "row",
-                    justifyContent: "space-around"
+                    justifyContent: "space-between",
+                    paddingLeft: 30,
+                    paddingRight: 30,
+                    paddingTop: 10,
+                    paddingBottom: 5
                   }}
                 >
                   <View style={{ flex: 0 }}>
@@ -32,18 +37,22 @@ export default class Home extends Component {
                       fill={70}
                       tintColor="#00e0ff"
                       backgroundColor="#3d5875"
+                      style={{ paddingBottom: 10 }}
                     >
                       {fill => (
                         <View style={{}}>
                           <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                            1600/2200
+                            1600
                           </Text>
                           <Text style={{ fontSize: 18, textAlign: "center" }}>
-                            Intake
+                            of 2200
                           </Text>
                         </View>
                       )}
                     </AnimatedCircularProgress>
+                    <Text style={{ fontSize: 20, textAlign: "center" }}>
+                      Calories Taken
+                    </Text>
                   </View>
                   <View style={{ flex: 0 }}>
                     <AnimatedCircularProgress
@@ -52,43 +61,35 @@ export default class Home extends Component {
                       fill={33}
                       tintColor="#f44336"
                       backgroundColor="#3d5875"
+                      style={{ paddingBottom: 10 }}
                     >
                       {fill => (
                         <View>
                           <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                            900/2700
+                            900
                           </Text>
                           <Text style={{ fontSize: 18, textAlign: "center" }}>
-                            Burnt
+                            of 2700
                           </Text>
                         </View>
                       )}
                     </AnimatedCircularProgress>
+                    <Text style={{ fontSize: 20, textAlign: "center" }}>
+                      Calories Burnt
+                    </Text>
                   </View>
                 </View>
               </View>
             </View>
           </CustomCard>
           <CustomCard>
-            <Text>Diet Recommended</Text>
-            <View>
-              <View style={{ flexDirection: "row" }}>
-                <View>
-                  <Icon name="pizza" style={styles.iconStyle} />
-                </View>
-                <View style={{ flexDirection: "column" }}>
-                  <Text>Dinner</Text>
-                  <Text>Chappatti and Poached Egg</Text>
-                </View>
-              </View>
-            </View>
+            <Text style={styles.heading}>Diet Recommended</Text>
+            <DietRecommendation />
           </CustomCard>
-          <CustomCard>
-            <Text>Tutorials</Text>
-            <View>
-              <Text>Youtube</Text>
-            </View>
-          </CustomCard>
+          <CustomCardFullWidth>
+            <Text style={styles.heading}>Tutorials</Text>
+            <Youtube />
+          </CustomCardFullWidth>
         </ScrollView>
         <ActionButton
           buttonColor="rgba(231,76,60,1)"
@@ -158,5 +159,6 @@ const styles = StyleSheet.create({
   },
   infoTextRadialInsde: {
     fontSize: 18
-  }
+  },
+  heading: { fontSize: 18, fontWeight: "bold" }
 });
