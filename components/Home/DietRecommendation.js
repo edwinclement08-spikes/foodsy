@@ -62,7 +62,7 @@ export default class DietRecommendation extends Component {
         <View
           style={{
             flexDirection: "row",
-            display: this.state.tabIndex == 1 ? "block" : "hidden"
+            display: this.state.tabIndex == 0 ? "flex" : "none"
           }}
         >
           <View>
@@ -74,8 +74,10 @@ export default class DietRecommendation extends Component {
           </View>
         </View>
         <View
-          style={{ flexDirection: "row" }}
-          style={this.state.tabIndex == 1 ? {} : styles.hidden}
+          style={{
+            flexDirection: "row",
+            display: this.state.tabIndex == 1 ? "flex" : "none"
+          }}
         >
           <View>
             <Icon name="food" style={styles.iconStyle} />
@@ -86,8 +88,10 @@ export default class DietRecommendation extends Component {
           </View>
         </View>
         <View
-          style={{ flexDirection: "row" }}
-          style={this.state.tabIndex == 2 ? {} : styles.hidden}
+          style={{
+            flexDirection: "row",
+            display: this.state.tabIndex == 2 ? "flex" : "none"
+          }}
         >
           <View>
             <Icon name="food" style={styles.iconStyle} />
