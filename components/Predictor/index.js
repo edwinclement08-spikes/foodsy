@@ -18,7 +18,7 @@ import SERVERIP from '../../assets/constant/SERVER';
 import SUBCATIP from '../../assets/constant/SUBCATIP'
 
 
-import { Button , Text } from 'native-base'
+import { Button , Text, Input } from 'native-base'
 
 export default class App extends Component{
 
@@ -27,11 +27,13 @@ export default class App extends Component{
     super(props);
     this.state = {
       fd : null,
+      userInput : null,
       result : false,
       predicted : false,
       fill : 86,
       imageData : '',
-      imageLink : 'https://i.imgur.com/XBhCPJk.jpg'
+      imageLink : 'https://i.imgur.com/XBhCPJk.jpg',
+      newDish : false
     }
     this.getPhotos = this.getPhotos.bind(this);
 
@@ -63,27 +65,35 @@ export default class App extends Component{
 
   _uploadToImgur = ()=>{
 
-    console.log("Uploading...")
-    var url = `${SERVERIP}/upload`;
-    var fd = this.state.fd
-    const ts = this;
-    axios({
-      method: 'post',
-      url: url,
-      data: fd,
-      config: { headers: {'content-type': 'multipart/form-data' }}
-      })
-      .then(function (response) {
-          //handle success
-          var data = response.data.data.link;
-          ts.setState({imageLink : data});
-          console.log("data is", data)
-          console.log("[INFO: ]",response.data.data);
-      })
-      .catch(function (response) {
-          //handle error
-          console.log("[RESPONSE: ]",response);
-    });    
+    return new Promise( ( resolve, reject ) =>{
+
+
+      console.log("Uploading...")
+      var url = `${SERVERIP}/upload`;
+      var fd = this.state.fd
+      const ts = this;
+      axios({
+        method: 'post',
+        url: url,
+        data: fd,
+        config: { headers: {'content-type': 'multipart/form-data' }}
+        })
+        .then(function (response) {
+            //handle success
+            var data = response.data.data.link;
+            ts.setState({imageLink : data});
+            console.log("data is", data)
+            console.log("[INFO: ]",response.data.data);
+            resolve(data);
+        })
+        .catch(function (response) {
+            //handle error
+            console.log("[RESPONSE: ]",response);
+            reject(response);
+      });      
+
+    })
+    
 
   }
 
@@ -114,7 +124,7 @@ export default class App extends Component{
       
       console.log(fd , "image data")
 
-      this._uploadToImgur();
+      // this._uploadToImgur();
     console.log("LOADED")
 
     })  ;
@@ -127,51 +137,38 @@ export default class App extends Component{
 
 
 
-  _classifyImage = async () =>{
+  // _foodOrNot = () =>{
 
-    var url = `${DLIP}/classify_food`
-    const ts = this;
+  //   console.log("Let's See..")
+  //   var url = `${DLIP}/check_if_food`;
 
-    axios.get(url).then( data =>{
+  //   var fd = this.state.fd
+  //   const ts = this;
+  //   axios({
+  //     method: 'post',
+  //     url: url,
+  //     data: fd,
+  //     config: { headers: {'content-type': 'multipart/form-data' }}
+  //     })
+  //     .then(function (response) {
+  //         //handle success
+  //         var data = response.data;
+  //         ts.setState({result : data.result, predicted : true})
+  //         console.log("[INFO: ]",response);
+  //     })
+  //     .catch(function (response) {
+  //         //handle error
+  //         console.log("[RESPONSE: ]",response);
+  //   }); 
 
-        console.log(data.data)
-
-    } ).catch( err => console.log(err) )
-    
-
-  }
-
-  _foodOrNot = () =>{
-
-    console.log("Let's See..")
-    var url = `${DLIP}/check_if_food`;
-
-    var fd = this.state.fd
-    const ts = this;
-    axios({
-      method: 'post',
-      url: url,
-      data: fd,
-      config: { headers: {'content-type': 'multipart/form-data' }}
-      })
-      .then(function (response) {
-          //handle success
-          var data = response.data;
-          ts.setState({result : data.result, predicted : true})
-          console.log("[INFO: ]",response);
-      })
-      .catch(function (response) {
-          //handle error
-          console.log("[RESPONSE: ]",response);
-    }); 
-
-  }
+  // }
 
   _predict = async () =>{
 
     console.log("Predicting..")
-    var url = `${DLIP}/classify_food`;
+    var url = `${DLIP}/predict`;
     var fd = this.state.fd
+    console.log("[PREDICTING: ]", fd)
     const ts = this;
     axios({
       method: 'post',
@@ -182,19 +179,28 @@ export default class App extends Component{
       .then(function (response) {
           //handle success
           var data = response.data;
-          ts.setState({result : data.result, predicted : true})
-          console.log("[INFO: ]",response);
+          console.log("[INFO: ]",data)
+          var ans = {
+            type : data.type,
+            class : data.class
+          }
+          ts.setState({result : ans, predicted : true})
+          console.log("[INFO: ]",response.data);
       })
       .catch(function (response) {
           //handle error
-          console.log("[RESPONSE: ]",response);
+          console.log("CAUGHT ERROR: ]",response);
     });
     
 
   }
 
 
-  __specialPredict = () => {
+  __specialPredict = async () => {
+
+    await this._uploadToImgur();
+
+    console.log("[STATE INFO] ", this.state)
 
     console.log("Let's See..")
     var url = `${SUBCATIP}`;
@@ -208,8 +214,13 @@ export default class App extends Component{
       .then(function (response) {
           //handle success
           var data = response.data;
-          ts.setState({result : data.best_guess, predicted : true})
-          console.log("[INFO: ]",response);
+          console.log("BEST GUESS", data.best_guess)
+          let temp = {
+            type : "food",
+            class: data.best_guess
+          }
+          ts.setState({result : temp, predicted : true })
+          console.log("[INFO: ]",response.data);
       })
       .catch(function (response) {
           //handle error
@@ -223,23 +234,8 @@ export default class App extends Component{
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
+        <Text style={styles.instructions}> Let's Classify Food </Text>
 
-        <AnimatedCircularProgress
-        size={200}
-        width={3}
-        fill={this.state.fill}
-        tintColor="#00e0ff"
-        backgroundColor="#3d5875">
-        {
-          (fill) => (
-            <Text style={styles.points}>
-              { this.state.fill }
-            </Text>
-          )
-        }
-        </AnimatedCircularProgress>
 
         <Button style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
          onPress={this.getPhotos} >
@@ -260,7 +256,7 @@ export default class App extends Component{
             <Text>
             Predict
             </Text>
-        </Button>
+        </Button>        
 
         <Button  style={{textAlign:'center',alignSelf: 'center',justifyContent:'center' ,width:260 , marginTop: 20, backgroundColor:"#0083d9"  }}
          onPress={this.__specialPredict } >
@@ -271,10 +267,10 @@ export default class App extends Component{
 
 
         {
-          this.state.predicted && 
-          <Text style={{ fontSize: 24 }} > { this.state.result } </Text>
-
+          (this.state.predicted && this.state.result.type == 'food' ) && 
+          <Text style={{ fontSize: 24 }} >{ this.state.result.class }</Text>
         }
+
 
 
         {/* <Button style={{ marginTop : 100 }} onPress={() => this.props.navigation.navigate('Youtube') } 
