@@ -129,8 +129,8 @@ export default class App extends Component {
 
         <Button
           style={styles.spaceMe}
-          onPress={() => this.props.navigation.navigate("Youtube")}
-          title="Upload to Imgur"
+          onPress={() => this.props.navigation.navigate("Graph")}
+          title="Graph"
         />
       </View>
     );
