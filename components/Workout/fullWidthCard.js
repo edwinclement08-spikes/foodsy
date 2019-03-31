@@ -1,6 +1,13 @@
 import React from "react";
-import { View, Text, ImageBackground, Image, TouchableOpacity, Button } from "react-native";
-import { withNavigation } from "react-navigation"
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+  Button
+} from "react-native";
+import { withNavigation } from "react-navigation";
 
 class FullWidthCard extends React.Component {
   constructor(props) {
@@ -53,11 +60,17 @@ class FullWidthCard extends React.Component {
                     width: 105
                   }}
                 >
-                  <TouchableOpacity onPress={this.props.navigation.navigate('WorkoutDetail')}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate("Exercise", {
+                        workoutType: this.props.workoutType
+                      })
+                    }
+                  >
                     <Text style={{ fontSize: 18, fontWeight: "bold" }}>
                       Start Now
                     </Text>
-                    </TouchableOpacity>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
