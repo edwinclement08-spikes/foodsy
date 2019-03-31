@@ -12,6 +12,7 @@ import axios from 'axios'
 import ImagePicker from 'react-native-image-picker';
 import DLIP from '../../assets/constant/DLIP';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { List, ListItem } from 'react-native-elements'
 
 
 import SERVERIP from '../../assets/constant/SERVER';
@@ -33,7 +34,15 @@ export default class App extends Component{
       fill : 86,
       imageData : '',
       imageLink : 'https://i.imgur.com/XBhCPJk.jpg',
-      newDish : false
+      newDish : false,
+      list: [
+        {
+          name: 'Amy Farha'
+        },
+        {
+          name: 'Chris Jackson'
+        }
+      ]
     }
     this.getPhotos = this.getPhotos.bind(this);
 
@@ -59,15 +68,9 @@ export default class App extends Component{
 
   }
 
-
-
-
-
   _uploadToImgur = ()=>{
 
     return new Promise( ( resolve, reject ) =>{
-
-
       console.log("Uploading...")
       var url = `${SERVERIP}/upload`;
       var fd = this.state.fd
@@ -91,16 +94,11 @@ export default class App extends Component{
             console.log("[RESPONSE: ]",response);
             reject(response);
       });      
-
     })
-    
-
   }
 
   getPhotos = async () => {
-
     var fd = new FormData()
-
 // Open Image Library:
     ImagePicker.showImagePicker({}, (response) => {
       
@@ -128,14 +126,7 @@ export default class App extends Component{
     console.log("LOADED")
 
     })  ;
-
-
-
-
-
   }
-
-
 
   // _foodOrNot = () =>{
 
@@ -191,10 +182,7 @@ export default class App extends Component{
           //handle error
           console.log("CAUGHT ERROR: ]",response);
     });
-    
-
   }
-
 
   __specialPredict = async () => {
 
@@ -226,14 +214,21 @@ export default class App extends Component{
           //handle error
           console.log("[RESPONSE: ]",response);
     }); 
-
-
   }
-
 
   render() {
     return (
       <View style={styles.container}>
+        <List containerStyle={{marginBottom: 20}}>
+          {
+            this.state.list.map((l) => (
+              <ListItem
+                key={l.name}
+                title={l.name}
+              />
+            ))
+          }
+      </List>
         <Text style={styles.instructions}> Let's Classify Food </Text>
 
 
