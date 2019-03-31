@@ -126,6 +126,11 @@ export default class App extends Component {
           onPress={() => this.props.navigation.navigate("Youtube")}
           title="Youtube"
         />
+        <Button
+          style={styles.spaceMe}
+          onPress={() => this.props.navigation.navigate("Exercise")}
+          title="Exercise"
+        />
 
         <Button
           style={styles.spaceMe}

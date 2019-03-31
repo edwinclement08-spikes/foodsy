@@ -1,183 +1,129 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
-  ImageBackground,
-  Image,
-  View,
-  Dimensions,
-  Linking
-} from "react-native";
-import {
-  Container,
-  Content,
-  Button,
-  Item,
-  Label,
-  Input,
-  Form,
   Text,
-  Icon
-} from "native-base";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+  View,
+  TextInput,
+  TouchableHighlight,
+  Image,
+  AsyncStorage,
+  Alert
+} from 'react-native';
+import axios from 'axios';
+import deviceStorage from "../../services/storage";
+import Spinner from 'react-native-loading-spinner-overlay';
 
-import IPADDR from "../../assets/constant/IP";
-import axios from "axios";
+export default class LoginView extends Component {
 
-const { width: WIDTH } = Dimensions.get("window");
-
-export default class SignIn extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      errorMessage: false
-    };
+    console.log(props);
+    state = {
+      email   : '',
+      password: '',
+      spinner: false
+    }
   }
 
-  _jumpToDemo = () => {
-    this.props.navigation.navigate("Demo");
-  };
+  onClickListener = (viewId) => {
+    Alert.alert("Alert", "Button pressed "+viewId);
+  }
 
-  verifyUser = () => {
-    var url = `${IPADDR}user/verify`;
-    var username = this.state.formUsername,
-      password = this.state.formPassword;
-
-    this.props.navigation.navigate("Home");
-    // axios.post( url , {username,password} ).then( res =>{
-
-    //     var data = res.data;
-    //     console.log(data, "======")
-    //     if ( data.status ){
-    //         if ( data.user.isStudent ){
-    //             this.props.navigation.navigate('profile', { user : data.user } )
-    //         }else{
-    //             this.props.navigation.navigate('driverdummy', { user : data.user })
-    //         }
-    //     }else{
-    //         this.setState( { errorMessage : true } )
-    //     }
-
-    // })
-  };
+  login = () => {
+    axios.post('http://foodsy-unscript.herokuapp.com/auth',
+    {
+      email: this.state.email,
+      password: this.state.password
+    }
+    ).then(res => {
+      const token = res.data.data.token;
+      const userID = res.data.data.user._id
+      AsyncStorage.setItem('token', token);
+      AsyncStorage.setItem("userID", userID);
+      //this.setState({ spinner: false });
+      this.props.navigation.navigate("Home")
+    })
+  }
 
   render() {
     return (
-      <Container>
-        <Content>
-          <View style={styles.logoContainer}>
-            <Text style={styles.logoText}>Login In</Text>
-          </View>
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
+          <TextInput style={styles.inputs}
+              placeholder="Email"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(email) => this.setState({email})}/>
+        </View>
+        
+        <View style={styles.inputContainer}>
+          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
+          <TextInput style={styles.inputs}
+              placeholder="Password"
+              secureTextEntry={true}
+              underlineColorAndroid='transparent'
+              onChangeText={(password) => this.setState({password})}/>
+        </View>
 
-          <View style={{ paddingLeft: 20, paddingRight: 20 }}>
-            {this.state.errorMessage && (
-              <View
-                style={{
-                  backgroundColor: "lightpink",
-                  padding: 20,
-                  borderRadius: 10,
-                  borderWidth: 2,
-                  borderColour: "red",
-                  textAlign: "center",
-                  marginTop: 20
-                }}
-              >
-                <Text>{this.state.errorMessage}</Text>
-              </View>
-            )}
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={()=>this.props.navigation.navigate("Home")}>
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableHighlight>
 
-            <Form block style={styles.item}>
-              <Item block floatingLabel>
-                <Label block style={{ marginBottom: 20 }}>
-                  <Text>Mobile Number</Text>
-                </Label>
-                <FontAwesome5
-                  name={"user"}
-                  brand
-                  style={{ paddingLeft: 25, color: "#000000" }}
-                />
-
-                <Input
-                  block
-                  onChangeText={text => this.setState({ formUsername: text })}
-                  value={this.state["formUsername"]}
-                />
-              </Item>
-              <Item floatingLabel>
-                <Label>Password</Label>
-                <FontAwesome5 name={"bars"} style={{ fontSize: 20 }} />
-                <Input
-                  secureTextEntry
-                  onChangeText={text => this.setState({ formPassword: text })}
-                  value={this.state["formPassword"]}
-                />
-              </Item>
-            </Form>
-            <View style={{ marginTop: 6, marginLeft: 15 }}>
-              <Text style={{ fontSize: 14 }}>Forgot Password...?</Text>
-            </View>
-
-            <Button
-              rounded
-              info
-              style={{
-                textAlign: "center",
-                alignSelf: "center",
-                justifyContent: "center",
-                width: 260,
-                marginTop: 20,
-                backgroundColor: "#0083d9"
-              }}
-              onPress={this.verifyUser}
-            >
-              <Text>Login</Text>
-            </Button>
-
-            <Button
-              rounded
-              info
-              style={{
-                textAlign: "center",
-                alignSelf: "center",
-                justifyContent: "center",
-                width: 260,
-                marginTop: 20,
-                backgroundColor: "#0083d9"
-              }}
-              onPress={this._jumpToDemo}
-            >
-              <Text>DEBUG</Text>
-            </Button>
-          </View>
-        </Content>
-      </Container>
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
+            <Text>Forgot your password?</Text>
+        </TouchableHighlight>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  backgroundContainer: {
+  container: {
     flex: 1,
-    width: null,
-    height: null,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#DCDCDC',
   },
-  logoContainer: {
-    alignItems: "center",
-    marginTop: 50
+  spinnerText: {
+    color: '#8e8e8e'
   },
-  logo: {
-    height: 150,
-    width: 150,
-    resizeMode: "contain"
+  inputContainer: {
+      borderBottomColor: '#F5FCFF',
+      backgroundColor: '#FFFFFF',
+      borderRadius:30,
+      borderBottomWidth: 1,
+      width:250,
+      height:45,
+      marginBottom:20,
+      flexDirection: 'row',
+      alignItems:'center'
   },
-  logoText: {
-    color: "black",
-    fontSize: 30,
-    fontWeight: "300",
-    opacity: 0.9
+  inputs:{
+      height:45,
+      marginLeft:16,
+      borderBottomColor: '#FFFFFF',
+      flex:1,
   },
-  item: {
-    paddingTop: 10
+  inputIcon:{
+    width:30,
+    height:30,
+    marginLeft:15,
+    justifyContent: 'center'
+  },
+  buttonContainer: {
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:250,
+    borderRadius:30,
+  },
+  loginButton: {
+    backgroundColor: "#00b5ec",
+  },
+  loginText: {
+    color: 'white',
   }
 });
