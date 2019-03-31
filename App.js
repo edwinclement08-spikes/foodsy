@@ -22,12 +22,13 @@ import {
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Predictor from "./components/Predictor";
+import Predict from "./components/Predictor/predict";
 import Demo from "./components/Demo";
 
 import Youtube from "./components/Demo/youtube";
 import Chatbot from "./components/ChatBot";
 import Workout from "./components/Workout";
-import WorkoutDetail from "./components/WorkoutDetail"
+import WorkoutDetail from "./components/WorkoutDetail";
 
 import SideBar from "./components/SideBar";
 
@@ -39,9 +40,9 @@ import ExercisePage from "./components/Exercise";
 const Mdn = createDrawerNavigator(
   {
     Home: { screen: Home },
-    Predictor: { screen: Predictor},
-    Chatbot: { screen: Chatbot},
-    Workout: { screen: Workout}
+    Predictor: { screen: Predictor },
+    Chatbot: { screen: Chatbot },
+    Workout: { screen: Workout }
   },
   {
     contentComponent: SideBar
@@ -56,6 +57,7 @@ const AppNavigator = createStackNavigator(
     Predictor: { screen: Predictor },
     Barcode: { screen: Barcode },
     Demo: { screen: Demo },
+    PredictDemo: { screen: Predict },
     Chatbot: { screen: Chatbot },
     Youtube: { screen: Youtube },
     Workout: { screen: Workout },
