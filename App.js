@@ -24,6 +24,8 @@ import Login from "./components/Login";
 import Predictor from "./components/Predictor";
 import Predict from "./components/Predictor/predict";
 import Demo from "./components/Demo";
+import Graph from './components/Graph'
+
 
 import Youtube from "./components/Demo/youtube";
 import Chatbot from "./components/ChatBot";
@@ -63,6 +65,7 @@ const AppNavigator = createStackNavigator(
     Workout: { screen: Workout },
     Home: Mdn,
     WorkoutDetail: { screen: WorkoutDetail },
+    Graph : { screen : Graph }
     Exercise: { screen: ExercisePage }
   },
   {

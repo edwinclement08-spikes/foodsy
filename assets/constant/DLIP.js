@@ -1,3 +1,3 @@
-const IPADDR = 'http://104.196.249.75:5043'
+const IPADDR = 'http://35.197.74.160:5043'
 
 export default IPADDR;
